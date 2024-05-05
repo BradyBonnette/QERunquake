@@ -1676,3 +1676,4 @@ void (entity targ) flash_off;
 void (entity targ) flash_on;
 void() PipeBombsInit;
 void() PipeBombsDetonate;
+void() Shadow_Spawn;

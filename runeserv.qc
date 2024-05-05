@@ -38,6 +38,7 @@ Rune_Think =
 	else if (self.runetype == RN_BLIZZARD)		Blizzard_Think ();
 	else if (self.runetype == RN_THOR)		Rune_Thor ();
 	else if (self.runetype == RN_DARK) 		Dark_Think();
+	else if (self.runetype == RN_SHADOW) 		Shadow_Spawn();
 };
 
 void ()
@@ -645,6 +646,14 @@ Rune_Tell_real =
 			"pipe bombs. Set up to 10 at a time,\n"
 			"detonate with rune activate button";
 	}
+	else if (type == RN_SHADOW)
+	{
+		desc_l = "Rune of Shadows";
+		desc_s = " RnShdws";
+
+		d1 = "Creates a trail of player clones\n"
+			"meant to confuse attackers and followers";
+	}
 	else
 	{
 		desc_l = "Invalid Rune";
@@ -1044,6 +1053,7 @@ Rune_Activate =
  	}
 	else if (self.runetype == RN_DARK) self.runevar = 0;
 	else if (self.runetype == RN_PIPE) PipeBombsInit();
+	else if (self.runetype == RN_SHADOW) Shadow_Spawn();
 
 	if (self.weapon == best)
 		set_weapon (W_BestWeapon ());
@@ -1272,7 +1282,7 @@ Rune_Touch =
 	// self.runetype = RN_PIPE;
 	// self.runetype = RN_DSPOTS;
 	// self.runetype = RN_WEIRD;
-	// self.runetype = RN_HASTE;
+	self.runetype = RN_SHADOW;
 
 	temp = self;
 	self = other;

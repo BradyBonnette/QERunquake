@@ -296,3 +296,70 @@ void () PipeBombsDetonate =
     missile = missile.chain;
   }
 };
+
+
+//Rune of Shadows
+void() Shadow_Think =
+{
+// if (self.maxspeed != 500)
+//    self.maxspeed = 500;
+   if (self.runetime < time)
+      {
+         if (self.owner.runetype == RN_SHADOW && self.owner.runevar > 0)
+            self.owner.runevar = self.owner.runevar - 1;
+         remove(self);
+         return;
+      }
+   if (self.owner.modelindex == modelindex_eyes)
+      self.modelindex = modelindex_eyes; else
+      self.modelindex = modelindex_player;
+
+   self.nextthink = time + 0.01;
+};
+
+void() Shadow_Spawn =
+{
+   local entity shadow;
+
+if (self.runevar > 12)
+         return;
+if (self.velocity == '0 0 0') //If not moving, why spawn any? =P
+         return;
+
+   if (self.runetime > time) return;
+
+   self.runetime = time + 0.04;
+   self.runevar = self.runevar + 1;
+
+   shadow = spawn();
+   shadow.movetype = MOVETYPE_NOCLIP;
+   shadow.solid = SOLID_NOT;
+   shadow.owner = self;
+   setmodel(shadow, "progs/player.mdl");
+   setorigin(shadow, self.origin);
+   setsize(shadow, '0 0 0', '0 0 0');
+   shadow.angles = self.angles;
+   shadow.angles_y = self.angles_y;
+   shadow.frame = self.frame;
+   shadow.colormap = self.colormap;
+   shadow.runetime = time + 0.6;
+   shadow.runevar = 1;
+   shadow.think = Shadow_Think;
+   shadow.nextthink = time + 0.01;
+
+
+// if (!self.velocity_z) //&& self.attack_state != 2)
+      self.velocity_z = self.velocity_z + 20;      //Hovering effect. =P
+
+      self.velocity = self.velocity + v_up*1.2;
+
+if (self.velocity_x < 450 && self.velocity_y < 450)
+   self.velocity = self.velocity * 1.05;
+//if (self.velocity > 450)
+  //  self.velocity = 450;
+
+//   if (self.velocity > 450)
+//    self.velocity = 450;
+//   if (self.velocity > 450)
+//    self.velocity = 450;
+};

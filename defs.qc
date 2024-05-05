@@ -493,12 +493,13 @@ float RN_TORNADO	= 57;
 float RN_REQUIEM	= 58;
 float RN_DARK       = 59;
 float RN_PIPE       = 60;
-float RN_MAX		= 60;
+float RN_SHADOW     = 61;
+float RN_MAX		= 61;
 
 // Only partially runes.
 
-float RN_LITHIUM_HOOK	= 61;
-float RN_MAX_ALL	= 61;
+float RN_LITHIUM_HOOK	= 62;
+float RN_MAX_ALL	= 62;
 
 // impulses
 
