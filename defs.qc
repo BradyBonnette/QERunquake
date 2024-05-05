@@ -492,12 +492,13 @@ float RN_BETTY		= 56;
 float RN_TORNADO	= 57;
 float RN_REQUIEM	= 58;
 float RN_DARK       = 59;
-float RN_MAX		= 59;
+float RN_PIPE       = 60;
+float RN_MAX		= 60;
 
 // Only partially runes.
 
-float RN_LITHIUM_HOOK	= 60;
-float RN_MAX_ALL	= 60;
+float RN_LITHIUM_HOOK	= 61;
+float RN_MAX_ALL	= 61;
 
 // impulses
 
@@ -1721,3 +1722,6 @@ float	gamemode_set;
 float	console_warp;
 
 .float botrunethink
+
+// Pipe Bomb Rune
+.float pipes

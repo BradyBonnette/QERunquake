@@ -90,7 +90,7 @@ Rune_Button =
 	else if (self.runetype == RN_BETTY)		Rune_Betty ();
 	else if (self.runetype == RN_TORNADO)		Rune_Tornado ();
 	else if (self.runetype == RN_DARK) 		Rune_Dark();
-
+	else if (self.runetype == RN_PIPE) 		PipeBombsDetonate();
 };
 
 // This doesn't always tell the riders because it can be triggered both
@@ -636,6 +636,15 @@ Rune_Tell_real =
 			"for a short period of time.\n"
 			"Flashlight provided.";
 	}
+	else if (type == RN_PIPE)
+	{
+		desc_l = "Rune of Pipe Bombs";
+		desc_s = " RnPipes";
+
+		d1 = "Your grenades are remotely detonated\n"
+			"pipe bombs. Set up to 10 at a time,\n"
+			"detonate with rune activate button";
+	}
 	else
 	{
 		desc_l = "Invalid Rune";
@@ -1034,6 +1043,7 @@ Rune_Activate =
 		set_current_ammo ();
  	}
 	else if (self.runetype == RN_DARK) self.runevar = 0;
+	else if (self.runetype == RN_PIPE) PipeBombsInit();
 
 	if (self.weapon == best)
 		set_weapon (W_BestWeapon ());
@@ -1049,6 +1059,9 @@ Rune_Delete =
 		if(current_runetype == RN_DARK) {
 			Lights_on();
 			flash_off(self);
+		} else if (current_runetype == RN_PIPE) {
+			PipeBombsDetonate();
+			self.pipes = 0;
 		}
 	}
 };
@@ -1256,7 +1269,11 @@ Rune_Touch =
 	}
 
 	// TEMPORARY
-	self.runetype = RN_DARK;
+	// self.runetype = RN_PIPE;
+	// self.runetype = RN_DSPOTS;
+	// self.runetype = RN_WEIRD;
+	// self.runetype = RN_HASTE;
+
 	temp = self;
 	self = other;
 	Rune_Activate (temp.runetype, 1);

@@ -1674,3 +1674,5 @@ void () Rune_Dark;
 void () Lights_on;
 void (entity targ) flash_off;
 void (entity targ) flash_on;
+void() PipeBombsInit;
+void() PipeBombsDetonate;

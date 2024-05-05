@@ -694,6 +694,10 @@ GrenadeExplode_targ =
 	if (targ)
 		T_Damage (targ, self, self.owner, 100 + (random () + 0.01) * 20, self.classname);
 
+	if (self.owner && self.owner.runetype == RN_PIPE && self.owner.pipes > 0) {
+		self.owner.pipes -= 1;
+	}
+
 	monk_radius_hack = 1;
 	T_RadiusDamage (RADIUS_NORMAL, self, self.owner, 120, targ, self.classname);
 	monk_radius_hack = 0;
@@ -796,7 +800,11 @@ W_FireGrenade =
 	else
 	{
 		newmis.touch		= GrenadeTouch;
-		newmis.nextthink	= time + 2.5;
+		if(class == "pipebomb") {
+			newmis.nextthink	= time + 30;
+		} else {
+			newmis.nextthink	= time + 2.5;
+		}
 		newmis.think		= GrenadeExplode;
 	}
 
@@ -1283,11 +1291,27 @@ W_Attack =
 	}
 	else if (base_weapon == IT_GRENADE_LAUNCHER)
 	{
+		if(self.runetype == RN_PIPE && self.pipes >= 10) {
+			centerprint(self,"No more than\n10 Pipe Bombs\nat a time!");
+			return;
+		}
 		player_rocket1 ();
-		if (is_alt)
+		if (is_alt){
 			W_FireGrenade ("gasbomb");
+		}
 		else
-			W_FireGrenade ("grenade");
+		{
+			//  pipe bomb rune
+			if (self.runetype == RN_PIPE)
+			{
+				self.pipes = (self.pipes + 1);
+				W_FireGrenade("pipebomb");
+			}
+			else
+			{
+				W_FireGrenade ("grenade");
+			}
+		}
 		t = 0.6 * haste_mult;
 	}
 	else if (base_weapon == IT_ROCKET_LAUNCHER)

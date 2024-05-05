@@ -633,6 +633,10 @@ ClientKill =
        }
      }
 
+     if(self.runetype == RN_PIPE) {
+	PipeBombsDetonate();
+     }
+
 	//if (dt == "suicide")
 		//kick_suicider ();
 };
@@ -2085,6 +2089,9 @@ ClientDisconnect =
 		self.flash_flag = FALSE;
 		self.flash.think = SUB_Remove;
 	}
+	if(self.runetype == RN_PIPE) {
+		PipeBombsDetonate();
+	}
 
 };
 
@@ -2118,6 +2125,9 @@ ClientObituary =
 				flash_off(targ);
 			}
 		}
+	}
+	if(targ.runetype == RN_PIPE) {
+		PipeBombsDetonate();
 	}
 
 
@@ -2324,6 +2334,8 @@ ClientObituary =
 				bprint (" was too close to his own BFG\n");
 			else if (dt == "grenade" || dt == "gasbomb")
 				bprint (" tries to put the pin back in\n");
+			else if (dt == "pipebomb")
+				bprint (" was too impatient with their own pipe bombs\n");
 			else if (dt == "lavagun")
 				bprint (" sizzled himself\n");
 			else if (dt == "flamethrower")
@@ -2625,6 +2637,11 @@ ClientObituary =
 		{
 			s1 = " was obliterated by ";
 			s2 = "'s shooting star\n";
+		}
+		else if (dt == "pipebomb")
+		{
+			s1 = " was detonated by ";
+			s2 = "'s pipe bombs\n";
 		}
 		else
 		{

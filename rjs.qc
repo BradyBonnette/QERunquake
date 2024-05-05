@@ -2945,14 +2945,6 @@ draw_hud =
 		centerprint7 (self, "\n\n\n\n\n\n\n\n\n\n\n\n",
 				weap, "                 ", lithhook, willdrop, runedesc, s);
 		in_hud_hack = 0;
-		// self_sprint(self, "runetypeeee = ");
-		// self_sprint(self, ftos(self.runetype));
-		// self_sprint(self, "\n");
-				// if (self.runetype == RN_DARK)
-				// {
-				// 	Lights_on();
-				// }
-
 	}
 };
 

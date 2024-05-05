@@ -90,9 +90,6 @@ void(entity targ) flash_off =
   targ.flash_flag = FALSE;
   W_SetCurrentAmmo ();
   if (targ.flash) {
-    bprint("Turning off flashlight for ");
-    bprint(targ.netname);
-    bprint("\n");
     targ.flash.think = SUB_Remove;
     targ.flash.nextthink = time + 0.1;
   }
@@ -160,9 +157,6 @@ void () Darkflag_zero =
 void () Lights_off =
 {
   darkcount = darkcount + 1;
-  bprint("darkcount = ");
-  bprint(ftos(darkcount));
-  bprint("\n");
   if (darkcount > 0)
   {
     local entity head;
@@ -272,5 +266,33 @@ void() Rune_Dark =
       flash_on(self);
     }
     return;
+  }
+};
+
+void () PipeBombsInit =
+{
+  self.pipes = 0;
+  self.items = self.items | IT_GRENADE_LAUNCHER;
+  self.ammo_rockets = self.ammo_rockets + 50;
+  if (self.ammo_rockets > 100)
+  {
+    self.ammo_rockets = 100;
+  }
+  W_SetCurrentAmmo();
+  self.impulse = 6;
+};
+
+void () PipeBombsDetonate =
+{
+  local entity missile;
+
+  missile = findradius (self.origin, 10000);
+  while(missile)
+  {
+    if ((missile.classname == "pipebomb") && (missile.owner == self))
+    {
+      missile.nextthink = time;
+    }
+    missile = missile.chain;
   }
 };
